@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6026df">
+  <title>Yuk Analisis</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">▥</span><div><b>Yuk Analisis</b><small>Analisis · Pantau · Kembangkan</small></div></div>
+    <button class="avatar" id="profileBtn">A</button>
+  </header>
+
+  <main>
+    <section class="page active" id="home">
+      <div class="welcome">
+        <div><h1 id="greeting">Halo! 👋</h1><p>Yuk lihat progres kegiatanmu hari ini.</p></div>
+        <span class="welcome-icon">↗</span>
+      </div>
+      <div class="metrics">
+        <article class="metric"><span>👥</span><small>Kehadiran Anggota</small><strong id="attendance">0%</strong></article>
+        <article class="metric blue"><span>▣</span><small>Program Terlaksana</small><strong id="programs">0 dari 0</strong></article>
+        <article class="metric orange"><span>🏆</span><small>Target Tercapai</small><strong id="target">0%</strong></article>
+      </div>
+      <section class="overall">
+        <div><small>Progres Keseluruhan</small><strong id="overall">0%</strong><span id="grade">Mulai catat progres</span></div>
+        <div class="ring" id="ring">★</div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Grafik Progres</h2><span class="tag">7 hari terakhir</span></div>
+        <svg id="chart" viewBox="0 0 340 150" role="img" aria-label="Grafik progres"></svg>
+        <div class="week"><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Kegiatan Terakhir</h2><button class="link" data-page="activities">Lihat semua →</button></div>
+        <div id="recent"></div>
+      </section>
+    </section>
+
+    <section class="page" id="activities">
+      <div class="page-title"><h1>☷ Kegiatan</h1><button class="primary" id="addBtn">＋ Tambah</button></div>
+      <input class="search" id="search" placeholder="⌕  Cari kegiatan...">
+      <div class="filters">
+        <button class="selected" data-filter="all">Semua</button>
+        <button data-filter="done">Selesai</button>
+        <button data-filter="open">Belum selesai</button>
+      </div>
+      <div class="activity-list" id="activityList"></div>
+    </section>
+
+    <section class="page" id="reports">
+      <div class="page-title"><h1>▥ Laporan</h1><button class="primary" id="saveImage">▧ Simpan gambar</button></div>
+      <section class="panel">
+        <label>Rentang tanggal</label>
+        <div class="date-range"><input type="date" id="fromDate"><span>—</span><input type="date" id="toDate"></div>
+      </section>
+      <div class="report" id="report">
+        <div class="report-title"><b>Yuk Analisis</b><small id="reportRange"></small></div>
+        <div class="metrics">
+          <article class="metric"><small>Kehadiran</small><strong id="rAttendance">0%</strong></article>
+          <article class="metric blue"><small>Program</small><strong id="rPrograms">0/0</strong></article>
+          <article class="metric orange"><small>Target</small><strong id="rTarget">0%</strong></article>
+        </div>
+        <section class="overall"><div><small>Progres Keseluruhan</small><strong id="rOverall">0%</strong></div><div class="ring">★</div></section>
+        <h3>Grafik Progres</h3><svg id="reportChart" viewBox="0 0 340 150"></svg>
+        <p class="report-foot">Dibuat dengan Yuk Analisis</p>
+      </div>
+    </section>
+
+    <section class="page" id="settings">
+      <h1>⚙ Pengaturan</h1>
+      <section class="panel profile">
+        <div class="avatar" id="settingsAvatar">A</div>
+        <div><b id="settingsName">Pengguna</b><small>Pengguna Yuk Analisis</small></div>
+        <button class="link" id="renameBtn">Ubah</button>
+      </section>
+      <section class="panel">
+        <h2>Bobot Progres</h2><p class="muted">Total bobot harus 100%.</p>
+        <label class="weight">Kehadiran <b id="attendanceLabel">30%</b><input type="range" id="wAttendance" min="0" max="100" value="30"></label>
+        <label class="weight">Program terlaksana <b id="programLabel">30%</b><input type="range" id="wProgram" min="0" max="100" value="30"></label>
+        <label class="weight">Target tercapai <b id="targetLabel">40%</b><input type="range" id="wTarget" min="0" max="100" value="40"></label>
+        <div class="weight-total" id="weightTotal">Total: 100%</div>
+        <button class="primary full" id="saveWeights">Simpan bobot</button>
+      </section>
+      <section class="panel">
+        <button class="setting-button" id="backup">Unduh cadangan data (JSON)</button>
+        <button class="setting-button danger" id="clearData">Hapus semua data</button>
+        <p class="muted">Data tersimpan lokal di perangkat ini.</p>
+      </section>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav active" data-page="home"><span>⌂</span>Beranda</button>
+    <button class="nav" data-page="activities"><span>▦</span>Kegiatan</button>
+    <button class="nav" data-page="reports"><span>▥</span>Laporan</button>
+    <button class="nav" data-page="settings"><span>⚙</span>Pengaturan</button>
+  </nav>
+</div>
+
+<div class="backdrop" id="activityModal" hidden>
+  <section class="modal">
+    <div class="modal-head"><h2 id="formTitle">Tambah Kegiatan</h2><button class="close" id="closeForm">✕</button></div>
+    <form id="activityForm">
+      <label>Nama kegiatan *<input name="name" required maxlength="90" placeholder="Contoh: Latihan rutin"></label>
+      <div class="form-row">
+        <label>Tanggal *<input name="date" type="date" required></label>
+        <label>Jam<input name="time" type="time"></label>
+      </div>
+      <div class="form-row">
+        <label>Target<input name="target" type="number" min="0" value="0"></label>
+        <label>Realisasi<input name="actual" type="number" min="0" value="0"></label>
+      </div>
+      <label>Daftar anggota <small>Pisahkan nama dengan koma</small><textarea name="roster" rows="3" placeholder="Aspianto, Rizky, Dandi"></textarea></label>
+      <label>Catatan<textarea name="notes" rows="2" maxlength="500"></textarea></label>
+      <button class="primary full" type="submit">Simpan kegiatan</button>
+    </form>
+  </section>
+</div>
+
+<div class="backdrop" id="detailModal" hidden>
+  <section class="modal">
+    <div class="modal-head"><h2 id="detailTitle">Detail Kegiatan</h2><button class="close" id="closeDetail">✕</button></div>
+    <div id="detailBody"></div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

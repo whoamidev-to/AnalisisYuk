@@ -1,0 +1,10 @@
+{
+  "name": "Yuk Analisis",
+  "short_name": "Yuk Analisis",
+  "description": "Analisis, pantau, dan kembangkan progres kegiatan",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fbfaff",
+  "theme_color": "#6026df",
+  "icons": []
+}
